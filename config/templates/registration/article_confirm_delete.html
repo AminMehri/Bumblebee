@@ -1,0 +1,17 @@
+{% extends 'registration/base.html' %}
+
+{% block titlesite %} 
+    Bumblebee | Articles delete
+{% endblock %}
+
+{% block title %}
+    Articles delete
+{% endblock %}
+
+{% block main %}
+    <form method="post" class="card card-danger">{% csrf_token %}
+        <p class="card-header text-center">Are you sure you want to delete "{{ object }}" by {{article.author.get_full_name}}?</p>
+        {{ form }}
+        <input class="card-footer btn-info text-warning" type="submit" value="Confirm">
+    </form>
+{% endblock %}

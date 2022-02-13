@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block titlesite %} 
+    Bumblebee | Categories
+{% endblock %}  
+
+
+{% block main %}
+    <section class="s-content s-content--top-padding s-content--narrow">
+
+        <article class="row entry format-standard">
+
+            <div class="entry__media col-full">
+                <div class="entry__post-thumb">
+                    <a href="http://127.0.0.1:8000/static/images/emma watson.jpg" target="_blank">
+                        <img src="{% static 'images/emma watson.jpg' %}"sizes="(max-width: 2000px) 100vw, 2000px" alt="">
+                    </a>
+                </div>
+            </div>
+
+            <div class="entry__header col-full" style="margin-bottom: 60px;">
+                <h1 class="entry__header-title display-1" style="background-color:white; padding: 15px;">
+                    Categories
+                </h1>
+            </div>
+
+        </article> <!-- end entry/article -->
+
+        <div class="row entries-wrap wide">
+            <div class="entries">
+                {% for cat in articles %}
+                    <article class="col-block">
+
+                        <div class="item-entry" data-aos="zoom-in">
+                            <div class="item-entry__thumb">
+                                <a href="{% url 'blog:category' cat.slug %}" class="item-entry__thumb-link">
+                                    <img src="{{cat.thumbnail.url}}" alt="{{cat.title}}">
+                                </a>
+                            </div>
+
+                            <div class="item-entry__text">
+                                <div class="item-entry__cat">
+                                        <a>Category</a>
+                                </div>
+
+                                <div class="item-entry__title">
+                                    <a href="{% url 'blog:category' cat.slug %}">{{cat.title}}</a>
+                                </div>
+                            </div>
+
+                        </div> <!-- item-entry -->
+                    </article> <!-- end article -->
+                {% endfor %}
+
+            </div> <!-- end entries -->
+        </div> <!-- end entries-wrap -->
+
+        <div class="row pagination-wrap">
+            <div class="col-full">
+                <nav class="pgn" data-aos="fade-up">
+                    <ul>
+                        {% if articles.has_previous %}
+                            <li><a class="pgn__prev" href="{% url 'blog:allcategory' articles.previous_page_number %}"></a></li>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+                        </span>
+
+                        {% if articles.has_next %}
+                            <li><a class="pgn__next" href="{% url 'blog:allcategory' articles.next_page_number %}"></a></li>   
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+    </section> <!-- end s-content -->
+{% endblock %}

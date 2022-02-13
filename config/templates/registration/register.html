@@ -1,0 +1,98 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'registration/login/login.css' %}">
+</head>
+
+<body>
+    <div class="login-wrap">
+        <div class="login-html">
+            {% if form.non_field_errors %}
+                <div class="errors" style="color: red; margin-bottom: 15px;">
+                    {% for error in form.non_field_errors %}
+                        <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <input id="tab-1" type="radio" name="tab" class="sign-in"><label for="tab-1" class="tab"><a href="{% url 'login' %}">Sign In</a></label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
+            <div class="login-form">
+                <div class="sign-up-htm">
+                    <form method="post">{% csrf_token %}
+                
+                            <div class="group">
+                                <label for="user" class="label">Username</label>
+                                {{form.username|add_class:"input"}}
+                
+                                {% if form.username.errors %}
+                                    <div class="errors" style="color: red; margin-bottom: 5px; margin-top: 5px;">
+                                        {% for error in form.username.errors %}
+                                            <span>{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                
+                            <div class="group">
+                                <label for="user" class="label">Email</label>
+                                {{form.email|add_class:"input"}}
+                
+                                {% if form.email.errors %}
+                                    <div class="errors" style="color: red; margin-bottom: 5px; margin-top: 5px;">
+                                        {% for error in form.email.errors %}
+                                            <span>{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="group">
+                                <label for="pass" class="label">Password</label>
+                                {{form.password1|add_class:"input"}}
+                
+                                {% if form.password1.errors %}
+                                    <div class="errors" style="color: red; margin-bottom: 5px; margin-top: 5px;">
+                                        {% for error in form.password1.errors %}
+                                            <span>{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="group">
+                                <label for="pass" class="label">Password confirm</label>
+                                {{form.password2|add_class:"input"}}
+                
+                                {% if form.password2.errors %}
+                                    <div class="errors" style="color: red; margin-bottom: 5px; margin-top: 5px;">
+                                        {% for error in form.password2.errors %}
+                                            <span>{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                
+                            <div class="group">
+                                <input type="submit" class="button" value="Sign Up">
+                            </div>
+
+                            <div class="hr"></div>
+                            <div class="foot-lnk" style="margin-top: 14px;">
+                                <a href="{% url 'blog:home' %}" target="_blank">Show Site</a>
+                            </div>
+                
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

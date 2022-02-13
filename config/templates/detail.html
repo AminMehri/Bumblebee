@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load comment_tags %}
+{% load ratings %}
+
+
+{% block titlesite %} 
+    Bumblebee | {{article.title}}
+{% endblock %}
+
+
+{% block main %}
+    <section class="s-content s-content--top-padding s-content--narrow">
+
+        <article class="row entry format-standard">
+
+            <div class="entry__media col-full">
+                <div class="entry__post-thumb">
+                    <a href="http://127.0.0.1:8000/media/{{article.thumbnail}}" target="_blank"><img src="{{article.thumbnail.url}}"
+                        sizes="(max-width: 2000px) 100vw, 2000px" alt=""></a>
+                </div>
+            </div>
+
+            <div class="entry__header col-full">
+                <h1 class="entry__header-title display-1">
+                    {{article.title}}
+                </h1>
+                {% if article.is_special %}
+                    <div style="background-color: red; border-radius: 50px; margin-bottom: 20px;">Special</div>
+                {% endif %}
+                <ul class="entry__header-meta">
+                    <li class="date">{{article.publish}}</li>
+                </ul>
+                <ul class="entry__header-meta">
+                    <li class="date">Views: {{article.hits.count}}</li>
+                </ul>
+            </div>
+            {% if article.is_special %}
+                {% if user.is_superuser or user.special_user or user == article.author %}
+                    <p >{{article.description|safe}}</p>
+                {% else %}
+                    <p>{{article.description|safe|truncatewords:40}}</p>
+                    <p style="background-color: aqua; padding: 8px; border-radius: 5px;">This article is only for special user. <a href="#"><b style="text-decoration: underline 2px solid;">Be special now</b></a></p>
+                {% endif %}
+            {% else %}
+                <p >{{article.description|safe}}</p>
+            {% endif %}
+                <div style="border: 3px solid; padding: 5px;">
+                    {% ratings article %}
+                </div>
+                
+                <div class="entry__author">
+                    <a href="http://127.0.0.1:8000/media/{{article.author.thumbnail}}" target="_blank">
+                        <img src="{{article.author.thumbnail.url}}" alt="">
+                    </a>
+
+                    <div class="entry__author-about">
+                        <h5 class="entry__author-name">
+                            <span>Posted by</span>
+                            <a href="{% url 'blog:author' article.author %}">{{article.author.get_full_name}}</a>
+                        </h5>
+
+                        <div class="entry__author-desc">
+                            <p>
+                                {{article.author.description}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- s-entry__main -->
+
+            {% render_comments article request %}
+
+        </article> <!-- end entry/article -->
+
+
+
+
+    </section> <!-- end s-content -->
+{% endblock %}
+
