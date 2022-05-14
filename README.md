@@ -1,6 +1,6 @@
 # Bumblebee
 
-A project for meet celebrities and their lifestyle. This project is User-centric site. All user can be a writer here.
+This project is User-centric site. All user can be a writer here.
 
 ## Technologies used in this project:
 
